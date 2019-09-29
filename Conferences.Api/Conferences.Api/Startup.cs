@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Conferences.Api.Configuration;
 using Conferences.Api.Domain;
+using Conferences.Api.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -40,6 +43,17 @@ namespace Conferences.Api
                 services.AddDbContext<ConferenceDataContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             }
+
+            services.AddScoped<IMapConferences, EfConferenceMap>();
+
+            MapperConfiguration config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new ConferencesProfile());
+            });
+
+            IMapper mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddSingleton(config);
           
         }
 
