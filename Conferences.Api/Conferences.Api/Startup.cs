@@ -42,7 +42,7 @@ namespace Conferences.Api
             else
             {
                 services.AddDbContext<ConferenceDataContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             }
 
             services.AddScoped<IMapConferences, EfConferenceMap>();
@@ -75,13 +75,15 @@ namespace Conferences.Api
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Conference Api v1");
             });
+
+            app.UseHttpsRedirection();
+            app.UseMvc();
+           
         }
     }
 }
