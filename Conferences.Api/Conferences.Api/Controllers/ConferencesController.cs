@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Conferences.Api.Domain;
 using Conferences.Api.Mapper;
 using Conferences.Api.Models;
+using Conferences.Api.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,11 +27,26 @@ namespace Conferences.Api.Controllers
                 ConferencesResponse response = await _conferenceMapper.GetAllConferences(topic);
                 return Ok(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // do something here like log the error
                 return StatusCode(500);
-            }                                                     
+            }
+        }
+
+        [HttpGet("{id:int}", Name = "conferences#getaconference")]
+        public async Task<IActionResult> GetAConference(int id)
+        {
+            try
+            {
+                ConferenceGetResponse response = await _conferenceMapper.GetConferenceById(id);
+                return this.Maybe(response);
+            }
+            catch (Exception ex)
+            {
+                // do something here like log the error
+                return StatusCode(500);
+            }           
         }
     }
 }

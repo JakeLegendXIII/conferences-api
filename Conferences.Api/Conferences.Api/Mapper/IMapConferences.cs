@@ -6,5 +6,6 @@ namespace Conferences.Api.Mapper
     public interface IMapConferences
     {
         Task<ConferencesResponse> GetAllConferences(string topic);
+        Task<ConferenceGetResponse> GetConferenceById(int id);
     }
 }

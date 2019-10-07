@@ -14,7 +14,8 @@ namespace Conferences.Api.Configuration
         {
             CreateMap<Conference, ConferencesSummaryItem>()
                         .ForMember(dest => dest.FocusTopic, opt => opt.MapFrom(s => s.FocusTopic.Name));
-
+            CreateMap<Conference, ConferenceGetResponse>()
+                .ForMember(dest => dest.FocusTopic, opt => opt.MapFrom(s => s.FocusTopic.Name));
         }        
     }
 }

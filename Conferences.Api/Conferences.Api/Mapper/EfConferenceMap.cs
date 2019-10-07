@@ -43,9 +43,19 @@ namespace Conferences.Api.Mapper
             return response;
         }
 
+        public async Task<ConferenceGetResponse> GetConferenceById(int id)
+        {
+            var result = await GetConferences()
+                .Where(c => c.Id == id)
+                .ProjectTo<ConferenceGetResponse>(_config)
+                .SingleOrDefaultAsync();
+            return result;
+        }
+
         private IQueryable<Conference> GetConferences()
         {
             return _context.Conferences;
         }
+
     }
 }
