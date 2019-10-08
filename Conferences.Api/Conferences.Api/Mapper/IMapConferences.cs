@@ -9,5 +9,6 @@ namespace Conferences.Api.Mapper
         Task<ConferenceGetResponse> GetConferenceById(int id);
         Task<ConferenceGetResponse> Add(ConferenceCreate conferenceToAdd);
         Task Remove(int id);
+        Task<bool> UpdateAttendanceFor(int id, bool attending);
     }
 }

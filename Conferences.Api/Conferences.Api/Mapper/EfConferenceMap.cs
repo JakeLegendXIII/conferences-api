@@ -77,6 +77,19 @@ namespace Conferences.Api.Mapper
             }
         }
 
+        public async Task<bool> UpdateAttendanceFor(int id, bool attending)
+        {
+            var conference = await GetConferences().SingleOrDefaultAsync(c => c.Id == id);
+            if (conference != null)
+            {
+                conference.Attending = attending;
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            return false;
+        }
+
         private IQueryable<Conference> GetConferences()
         {
             return _context.Conferences;

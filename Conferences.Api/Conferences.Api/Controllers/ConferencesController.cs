@@ -79,5 +79,28 @@ namespace Conferences.Api.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpPut("{id:int}/attending")]
+        public async Task<IActionResult> UpdateAttendance(int id, [FromBody] bool attending)
+        {
+            try
+            {
+                bool updates = await _conferenceMapper.UpdateAttendanceFor(id, attending);
+
+                if (updates)
+                {
+                    return StatusCode(204); // no content, looks good!
+                }
+                else
+                {
+                    return NotFound(); // There was no conference with that Id!
+                }
+            }
+            catch (Exception ex)
+            {
+                // do something here like log the error
+                return StatusCode(500);
+            }
+        }
     }
 }
