@@ -22,9 +22,20 @@ namespace XConferences.Api.IntegrationTests.ConferencesResource
             var httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             // When I can no longer attend
             var response = await Client.PutAsync($"/api/v1/conferences/{1}/attending", httpContent);
-            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
             // Then the data should be updated accordingly
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
 
+            // Should use a better example or make attendance more visible to truly verify...
+        }
+
+        [Fact]
+        public async Task FourOhFourUpdateConferenceAttendanceToFalse()
+        {
+            SetupMockData();
+            var jsonString = "false";
+            var httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            var response = await Client.PutAsync($"/api/v1/conferences/{2}/attending", httpContent);
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         private async void SetupMockData()
