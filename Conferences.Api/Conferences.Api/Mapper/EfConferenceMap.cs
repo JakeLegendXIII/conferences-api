@@ -67,10 +67,21 @@ namespace Conferences.Api.Mapper
             return _mapper.Map<ConferenceGetResponse>(conference);
         }
 
+        public async Task Remove(int id)
+        {
+            var conference = await GetConferences().SingleOrDefaultAsync(c => c.Id == id);
+            if (conference != null)
+            {
+                _context.Remove(conference);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         private IQueryable<Conference> GetConferences()
         {
             return _context.Conferences;
         }
 
+       
     }
 }

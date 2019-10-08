@@ -64,5 +64,20 @@ namespace Conferences.Api.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> RemoveConference(int id)
+        {
+            try
+            {
+                await _conferenceMapper.Remove(id);
+                return StatusCode(204);
+            }
+            catch (Exception ex)
+            {
+                // do something here like log the error
+                return StatusCode(500);
+            }
+        }
     }
 }
