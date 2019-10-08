@@ -16,6 +16,13 @@ namespace Conferences.Api.Configuration
                         .ForMember(dest => dest.FocusTopic, opt => opt.MapFrom(s => s.FocusTopic.Name));
             CreateMap<Conference, ConferenceGetResponse>()
                 .ForMember(dest => dest.FocusTopic, opt => opt.MapFrom(s => s.FocusTopic.Name));
+            CreateMap<ConferenceCreate, Conference>()
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(s => DateTime.Now))
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(s => DateTime.Now))
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.FocusTopic, opt => opt.Ignore())
+                .ForMember(dest => dest.Attending, opt => opt.MapFrom((s) => true))
+                .ForMember(dest => dest.Speaking, opt => opt.MapFrom((s) => true));
         }        
     }
 }

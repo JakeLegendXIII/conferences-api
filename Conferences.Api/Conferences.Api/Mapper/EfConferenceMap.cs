@@ -21,7 +21,7 @@ namespace Conferences.Api.Mapper
             _context = context;
             _mapper = mapper;
             _config = config;
-        }
+        } 
 
         public async Task<ConferencesResponse> GetAllConferences(string topic)
         {
@@ -50,6 +50,21 @@ namespace Conferences.Api.Mapper
                 .ProjectTo<ConferenceGetResponse>(_config)
                 .SingleOrDefaultAsync();
             return result;
+        }
+
+        public async Task<ConferenceGetResponse> Add(ConferenceCreate conferenceToAdd)
+        {
+            var conference = _mapper.Map<Conference>(conferenceToAdd);
+            var topic = await _context.Topics
+                .SingleOrDefaultAsync(t => t.Name == conferenceToAdd.FocusTopic);
+            if (topic == null)
+            {
+                topic = new Topic { Name = conferenceToAdd.FocusTopic };
+            }
+            conference.FocusTopic = topic; // Will add new topic to DB too
+            _context.Add(conference);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<ConferenceGetResponse>(conference);
         }
 
         private IQueryable<Conference> GetConferences()

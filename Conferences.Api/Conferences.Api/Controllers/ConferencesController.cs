@@ -48,5 +48,21 @@ namespace Conferences.Api.Controllers
                 return StatusCode(500);
             }           
         }
+
+        [HttpPost]
+        [ValidateModel]
+        public async Task<IActionResult> AddConference([FromBody] ConferenceCreate conferenceToAdd)
+        {
+            try
+            {
+                ConferenceGetResponse response = await _conferenceMapper.Add(conferenceToAdd);
+                return CreatedAtRoute("conferences#getaconference", new { id = response.Id }, response);
+            }
+            catch (Exception ex)
+            {
+                // do something here like log the error
+                return StatusCode(500);
+            }
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace Conferences.Api.Mapper
     {
         Task<ConferencesResponse> GetAllConferences(string topic);
         Task<ConferenceGetResponse> GetConferenceById(int id);
+        Task<ConferenceGetResponse> Add(ConferenceCreate conferenceToAdd);
     }
 }
